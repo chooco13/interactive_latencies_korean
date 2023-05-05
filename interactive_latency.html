@@ -353,30 +353,29 @@
     function getMetrics() {
         var ns = new Metric(1, "ns", "", "ns");
         // Source for L1: http://cache.freescale.com/files/32bit/doc/app_note/AN2180.pdf
-        var L1 = new Metric(3*getCycle(), "ns", "L1 cache reference: ", "L1");
-        var branch = new Metric(10*getCycle(), "ns", "Branch mispredict: ", "branch");
+        var L1 = new Metric(3*getCycle(), "ns", "L1 캐시 참조: ", "L1");
+        var branch = new Metric(10*getCycle(), "ns", "분기 예측 오류: ", "branch");
         // Source for L2: http://cache.freescale.com/files/32bit/doc/app_note/AN2180.pdf
-        var L2 = new Metric(13*getCycle(), "ns", "L2 cache reference: ", "L2");
-        var mutex = new Metric(50*getCycle(), "ns", "Mutex lock/unlock: ", "mutex");
+        var L2 = new Metric(13*getCycle(), "ns", "L2 캐시 참조: ", "L2");
+        var mutex = new Metric(50*getCycle(), "ns", "뮤텍스 락/언락: ", "mutex");
         var ns100 = new Metric(100, "ns", "", "ns100", ' = ' + singleBox(blue));
-        var mem = new Metric(getMemLatency(), "100ns", "Main memory reference: ", "mem");
+        var mem = new Metric(getMemLatency(), "100ns", "주 메모리 참조: ", "mem");
         var micro = new Metric(100*10, "100ns", "", "micro");
-        var snappy = new Metric(6000 * getCycle(), "100ns", "Compress 1KB wth Snappy: ",
-                               "snappy");
+        var snappy = new Metric(6000 * getCycle(), "100ns", "Snappy로 1KB 압축: ", "snappy");
         var tenMicro = new Metric(100*100, "100ns", "", "tenMicro", ' = ' + singleBox(green));
         var network = new Metric(getNICTransmissionDelay(getNetworkPayloadBytes()), "10us",
-              "Send " + addCommas(getNetworkPayloadBytes()) + " bytes over commodity network: ", "network");
-        var ssdRandom = new Metric(getSSDLatency(), "10us", "SSD random read: ", "ssdRandom");
+        `일반 상용 네트워크상에서 ${addCommas(getNetworkPayloadBytes())}Byte 전송:`, "network");
+        var ssdRandom = new Metric(getSSDLatency(), "10us", "SSD상에서 임의 위치의 데이터 읽기: ", "ssdRandom");
         var mbMem = new Metric(getBusTransmissionDelay(getPayloadBytes()), "10us",
-                                "Read " + addCommas(getPayloadBytes()) + " bytes sequentially from memory: ", "mbMem");
-        var rtt = new Metric(getDCRTT(), "10us", "Round trip in same datacenter: ", "rtt");
+                                `메모리에서 ${addCommas(getPayloadBytes())}Byte 순차적 읽기: `, "mbMem");
+        var rtt = new Metric(getDCRTT(), "10us", "동일 데이터 센터 내에서의 패킷 왕복 지연시간: ", "rtt");
         var ms = new Metric(100*100*100, "10us", "", "ms", ' = ' + singleBox(red));
         var mbSSD = new Metric(getSSDTransmissionDelay(getPayloadBytes()), "ms",
-                               "Read " + addCommas(getPayloadBytes()) + " bytes sequentially from SSD: ", "mbSSD");
-        var seek = new Metric(getSeek(), "ms", "Disk seek: ", "seek");
+                               `SSD에서 ${addCommas(getPayloadBytes())}Byte 순차적으로 읽기: `, "mbSSD");
+        var seek = new Metric(getSeek(), "ms", "디스크 탐색: ", "seek");
         var mbDisk = new Metric(getDiskTransmissionDelay(getPayloadBytes()), "ms",
-                                "Read " + addCommas(getPayloadBytes()) + " bytes sequentially from disk: ", "mbDisk");
-        var wan = new Metric(getWanRTT(), "ms", "Packet roundtrip CA to Netherlands: ", "wan");
+                                `디스크에서 ${addCommas(getPayloadBytes())}Byte 순차적으로 일기: `, "mbDisk");
+        var wan = new Metric(getWanRTT(), "ms", "CA에서 네덜란드까지의 패킷 왕복 지연시간: ", "wan");
         var metrics = new Array(ns,L1,branch,L2,mutex,ns100,mem,micro,snappy,tenMicro,network,
                                ssdRandom,mbMem,rtt,ms,mbSSD,seek,mbDisk,wan);
         return metrics;
